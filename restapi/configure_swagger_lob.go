@@ -4,6 +4,7 @@ package restapi
 
 import (
 	"crypto/tls"
+	"github.com/takahashis-shun/go-swagger-tutorial/restapi/handler"
 	"net/http"
 
 	"github.com/go-openapi/errors"
@@ -39,12 +40,14 @@ func configureAPI(api *operations.SwaggerLobAPI) http.Handler {
 
 	if api.GetUserByIDHandler == nil {
 		api.GetUserByIDHandler = operations.GetUserByIDHandlerFunc(func(params operations.GetUserByIDParams) middleware.Responder {
-			return middleware.NotImplemented("operation operations.GetUserByID has not yet been implemented")
+			h := handler.GetUserByIDHandler{}
+			return h.Handle(params)
 		})
 	}
 	if api.PostUserHandler == nil {
 		api.PostUserHandler = operations.PostUserHandlerFunc(func(params operations.PostUserParams) middleware.Responder {
-			return middleware.NotImplemented("operation operations.PostUser has not yet been implemented")
+			h := handler.PostUserHandler{}
+			return h.Handle(params)
 		})
 	}
 
